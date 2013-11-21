@@ -128,11 +128,18 @@ public class TemperatureConverterActivityTests extends ActivityInstrumentationTe
 		mFahrenheit.requestFocus(); 
 		mFahrenheit.setNumber(f);
 		mCelsius.requestFocus(); 
-		final double expectedC = TemperatureConverter.fahrenheitToCelsius(f); 
-		final double actualC = mCelsius.getNumber();
-		final double delta = Math.abs(expectedC - actualC); 
-		final String msg = "" + f + "F -> " + expectedC + "Cbut was " + actualC + "C (delta " + delta + ")";
-		assertTrue(msg, delta < 0.005);
+		mFahrenheit.postDelayed(new Runnable() {
+			
+			@Override
+			public void run() {
+				final double expectedC = TemperatureConverter.fahrenheitToCelsius(f); 
+				final double actualC = mCelsius.getNumber();
+				final double delta = Math.abs(expectedC - actualC); 
+				final String msg = "" + f + "F -> " + expectedC + "Cbut was " + actualC + "C (delta " + delta + ")";
+				assertTrue(msg, delta < 0.005);
+			}
+		}, 3000);
+		
 	}
 
 }
